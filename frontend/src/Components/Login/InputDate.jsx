@@ -13,10 +13,11 @@ const input = () => {
             ...state,
             [e.target.name]: value
         })
-
     }
     const handleSubmit = (e) => {
-        sendData();
+        const coordinates = sendData();
+        console.log(coordinates);
+        //const aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60, target: coordenadas});
     }
 
     const sendData = async () => {
@@ -32,18 +33,23 @@ const input = () => {
             headers: {
                 "Content-Type": "application/json"
             }
+            
+            .then((response) => response.json())
+            .then(data =>{
+                return data;
+                })
         })
           
         } catch (error) {
           alert("Error inesperaddo");
         }
-    };
-
+    }
+    
     return (
         <div className="input">
             <form onSubmit={handleSubmit}>
-                <input type={number} name="day" onChange={handleChange}>Day: </input>
-                <input type={number} name="month" onChange={handleChange}>Month: </input>
+                <input type={number} name="day" onChange={handleChange} required>Day: </input>
+                <input type={number} name="month" onChange={handleChange} required>Month: </input>
                 <button>Next</button>
             </form>
             
