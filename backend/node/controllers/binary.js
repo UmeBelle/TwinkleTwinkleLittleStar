@@ -8,7 +8,7 @@ const binary = (a, b) => {
 
 const sendData = async(req, res) => {
     try{
-        const { day, month } = req.body;
+        const { day, month } = await req.body;
         const data = binary(day, month);
         return res
         .status(200)

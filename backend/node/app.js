@@ -8,6 +8,8 @@ const PORT = 4000;
 app.use(cors());
 app.use("/binary", convertBinary);
 
+
+
 app.listen(PORT, () => {
     console.log(`Server running at ${PORT}`);
 });
