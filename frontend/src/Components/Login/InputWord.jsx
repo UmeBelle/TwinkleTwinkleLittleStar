@@ -37,14 +37,13 @@ const input = () => {
         }
     };
 
-    return (
-        <div className="input">
-            <form onSubmit={handleSubmit}>
-                <input name="words" onChange={handleChange}>Write whatever you'd like: </input>
-                <button>Next</button>
-            </form>
-            
-        </div>
+    return (    
+            <div className="input">
+                <form onSubmit={handleSubmit}>
+                    <input name="words" onChange={handleChange} required>Write whatever you'd like: </input>
+                    <button>Next</button>
+                </form>
+            </div>
     )
 }
 
