@@ -1,10 +1,21 @@
-import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Input = () => {
     const [day, setDay] = useState("");
     const [month, setMonth] = useState("");
+    const [aladin, setAladin] = useState(null);
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+        if (aladin){
+            aladin.on('objectClicked', function(object) {
+                console.log(object);
+                setText("This is a star, "+object.data.name)
+            });
+        }
+        console.log(aladin);
+    }, aladin);
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -17,27 +28,17 @@ const Input = () => {
                 break;
         }
     }
+
     const handleSubmit = (e) => {
+        const state = window.A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60, target: "60"});
         e.preventDefault();
-        const coordinates = sendData(day, month);
-        console.log(coordinates);
-        //const aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60, target: coordenadas});
+        setAladin(state);
+        console.log(aladin);
+        const cat = window.A.catalog({sourceSize: 20});
+        state.addCatalog(cat);
+        cat.addSources([window.A.source(day, month, {name: 'your Star'})]);
     }
 
-    const sendData = (day, month) => {
-        const info = {
-            day: day,
-            month: month
-        };
-        axios
-            .head('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS')
-            .post("http://localhost:4000/binary", info)
-            .then((response) => response.json())
-            .then(data =>{
-                return data;
-            })
-    }
-    
     return (
         <div className="input">
             <form onSubmit={handleSubmit}>
@@ -45,7 +46,8 @@ const Input = () => {
                 Month: <input type='number' name="month" onChange={handleChange} required/> <br></br>
                 <button>Next</button>
             </form>
-            
+            <div id="aladin-lite-div" style={{width:800,height:800} }></div>
+            <h1>{text}</h1>
         </div>
     )
 }
