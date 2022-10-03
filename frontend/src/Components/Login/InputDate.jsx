@@ -11,7 +11,11 @@ const Input = () => {
         if (aladin){
             aladin.on('objectClicked', function(object) {
                 console.log(object);
-                setText("This is a star, "+object.data.name)
+                if(object){
+                    setText("This is a star, "+object.data.name)
+                }else{
+                    setText("You clicked on void")
+                }
             });
         }
         console.log(aladin);
@@ -30,7 +34,7 @@ const Input = () => {
     }
 
     const handleSubmit = (e) => {
-        const state = window.A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60, target: "60"});
+        const state = window.A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60, target: day + month});
         e.preventDefault();
         setAladin(state);
         console.log(aladin);
